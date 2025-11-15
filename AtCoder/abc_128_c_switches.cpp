@@ -38,7 +38,12 @@ int main() {
   
   int count = 0;
   
-    // 全探索: 0 ~ 2^N - 1
+  // 全探索: 0 ~ 2^N - 1    
+  // ビットシフト <<
+  // 例 
+  // const N = 5;
+  // 1 << N は 2^5 = 32
+const totalStates = 1 << N; // 結果: 32
     for (int state = 0; state < (1 << N); state++) {
         bool all_lit = true;
         
