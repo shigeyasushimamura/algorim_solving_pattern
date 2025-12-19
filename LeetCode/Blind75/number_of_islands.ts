@@ -37,3 +37,56 @@ function dfs(grid: string[][], r: number, c: number): void {
   dfs(grid, r, c - 1);
   dfs(grid, r, c + 1);
 }
+
+/**
+ * 型安全なキュー(タプルの配列)を使って実装する
+ */
+function numIslandsBFS(grid: string[][]): number {
+  if (!grid || grid.length === 0) return 0;
+
+  let islandCount: number = 0;
+  const rows: number = grid.length;
+  const cols: number = grid[0].length;
+
+  // 四方向への移動用ベクトル
+  const directions: [number, number][] = [
+    [-1, 0],
+    [1, 0],
+    [0, -1],
+    [0, 1],
+  ];
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (grid[r][c] === "1") {
+        islandCount++;
+
+        // BFS開始
+        const queue: [number, number][] = [[r, c]];
+        grid[r][c] = "0"; // 訪問済みにする
+
+        while (queue.length > 0) {
+          const [currR, currC] = queue.shift()!; // shift()はundefinedを返す可能性があるため ! を付与
+
+          for (const [dr, dc] of directions) {
+            const nextR = currR + dr;
+            const nextC = currC + dc;
+
+            if (
+              nextR >= 0 &&
+              nextR < rows &&
+              nextC >= 0 &&
+              nextC < cols &&
+              grid[nextR][nextC] === "1"
+            ) {
+              grid[nextR][nextC] = "0"; // 陸地を沈める
+              queue.push([nextR, nextC]);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return islandCount;
+}
