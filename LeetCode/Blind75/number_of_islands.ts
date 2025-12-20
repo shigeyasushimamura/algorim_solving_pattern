@@ -11,8 +11,10 @@ function numIsLands(grid: string[][]): number {
 
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
-      isLandCount++;
-      dfs(grid, r, c);
+      if (grid[r][c] == "1") {
+        isLandCount++;
+        dfs(grid, r, c);
+      }
     }
   }
   return isLandCount;
